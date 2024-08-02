@@ -9,3 +9,9 @@ Implemented Features:
 ![creeper_cookie](https://github.com/user-attachments/assets/a4fd4c40-c025-4bb5-ac51-26ed20d8eced)
 - Purified Zombie Flesh (Basic Functionality)
 ![purified_zombie_flesh](https://github.com/user-attachments/assets/1f39dc8c-714d-4064-9f71-cd0f0331c882)
+
+
+Planned Features:
+- Implement Loot Tables
+- Add Crafting Recipes
+- More Items
