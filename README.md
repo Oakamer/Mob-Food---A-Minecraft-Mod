@@ -15,3 +15,4 @@ Planned Features:
 - Implement Loot Tables
 - Add Crafting Recipes
 - More Items
+- Also need to remove some legacy code
