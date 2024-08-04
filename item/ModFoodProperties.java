@@ -17,4 +17,7 @@ public class ModFoodProperties {
 
     public static final FoodProperties ENDER_BISCUIT = new FoodProperties.Builder().nutrition(5).saturationMod(0.25f)
             .effect(() -> new MobEffectInstance(MobEffects.DARKNESS, 80, 4), 100f).build();
+
+    public static final FoodProperties SPIDER_BLOOD_PURIFIED = new FoodProperties.Builder().nutrition(0).saturationMod(0.25f)
+            .effect(() -> new MobEffectInstance(MobEffects.NIGHT_VISION, 200, 4), 100f).build();
 }
