@@ -13,6 +13,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.oakamer.cropcraft.block.ModBlocks;
+import net.oakamer.cropcraft.effect.ModEffects;
 import net.oakamer.cropcraft.item.ModItems;
 import net.oakamer.cropcraft.sound.ModSounds;
 import org.slf4j.Logger;
@@ -30,7 +31,7 @@ public class CropCraftMod
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-
+        ModEffects.register(modEventBus);
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModSounds.register(modEventBus);
@@ -58,6 +59,7 @@ public class CropCraftMod
             event.accept(ModItems.PURIFIED_ZOMBIE_FLESH);
             event.accept(ModItems.CREEPER_COOKIE);
             event.accept(ModItems.ENDER_BISCUIT);
+            event.accept(ModItems.SPIDER_BLOOD_PURIFIED);
         }
     }
 
