@@ -1,51 +1,85 @@
-package net.oakamer.cropcraft.item;
+package net.oakamer.cropcraft;
 
-
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemNameBlockItem;
-import net.minecraft.world.item.RecordItem;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import com.mojang.logging.LogUtils;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.oakamer.cropcraft.CropCraftMod;
-import net.oakamer.cropcraft.CropCraftMod;
-import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.oakamer.cropcraft.block.ModBlocks;
+import net.oakamer.cropcraft.effect.ModEffects;
+import net.oakamer.cropcraft.item.ModItems;
 import net.oakamer.cropcraft.sound.ModSounds;
+import org.slf4j.Logger;
 
-public class ModItems {
-    public static final DeferredRegister<Item> ITEMS =
-            DeferredRegister.create(ForgeRegistries.ITEMS, CropCraftMod.MOD_ID);
+// The value here should match an entry in the META-INF/mods.toml file
+@Mod(CropCraftMod.MOD_ID)
+public class CropCraftMod
+{
+    // Define mod id in a common place for everything to reference
+    public static final String MOD_ID = "cropcraft";
+    private static final Logger LOGGER = LogUtils.getLogger();
 
-    public static final RegistryObject<Item> ZIRCON = ITEMS.register("zircon",
-            () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> RAW_ZIRCON = ITEMS.register("raw_zircon",
-            () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> ZANTIUM_INGOT = ITEMS.register("zantium_ingot",
-            () -> new Item(new Item.Properties()));
 
-    public static final RegistryObject<Item> GOLDDEW_SEEDS = ITEMS.register("golddew_seeds",
-            () -> new ItemNameBlockItem(ModBlocks.GOLDDEW_CROP.get(), new Item.Properties()));
-    public static final RegistryObject<Item> GOLDDEW_CORE = ITEMS.register("golddew_core",
-            () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> GOLDDEW_STEAK = ITEMS.register("golddew_steak",
-            () -> new Item(new Item.Properties().food(ModFoodProperties.GOLDDEW_STEAK)));
-
-    public static final RegistryObject<Item> FLUTE_CONCIERTO_RECORD = ITEMS.register("flute_concierto_record",
-            () -> new RecordItem(4, ModSounds.FLUTE_CONCIERTO, new Item.Properties().stacksTo(1), 3660));
-
-    //Mob Food------------------------------------------------------
-    public static final RegistryObject<Item> PURIFIED_ZOMBIE_FLESH = ITEMS.register("purified_zombie_flesh",
-            () -> new Item(new Item.Properties().food(ModFoodProperties.PURIFIED_ZOMBIE_FLESH)));
-    public static final RegistryObject<Item> CREEPER_COOKIE = ITEMS.register("creeper_cookie",
-            () -> new Item(new Item.Properties().food(ModFoodProperties.CREEPER_COOKIE)));
-    public static final RegistryObject<Item> ENDER_BISCUIT = ITEMS.register("ender_biscuit",
-            () -> new Item(new Item.Properties().food(ModFoodProperties.ENDER_BISCUIT)));
-    //Mob Food------------------------------------------------------
-
-    public static void register(IEventBus eventBus)
+    public CropCraftMod()
     {
-        ITEMS.register(eventBus);
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        ModEffects.register(modEventBus);
+        ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
+        ModSounds.register(modEventBus);
+
+        modEventBus.addListener(this::commonSetup);
+        MinecraftForge.EVENT_BUS.register(this);
+        modEventBus.addListener(this::addCreative);
     }
+
+    private void commonSetup(final FMLCommonSetupEvent event)
+    {
+
+    }
+
+    // Add the example block item to the building blocks tab
+    private void addCreative(BuildCreativeModeTabContentsEvent event)
+    {
+        if(event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS)
+        {
+            event.accept(ModItems.GOLDDEW_SEEDS);
+            event.accept(ModItems.GOLDDEW_CORE);
+            event.accept(ModItems.GOLDDEW_STEAK);
+            event.accept(ModItems.FLUTE_CONCIERTO_RECORD);
+
+            event.accept(ModItems.PURIFIED_ZOMBIE_FLESH);
+            event.accept(ModItems.CREEPER_COOKIE);
+            event.accept(ModItems.ENDER_BISCUIT);
+            event.accept(ModItems.SPIDER_BLOOD_PURIFIED);
+        }
+    }
+
+    // You can use SubscribeEvent and let the Event Bus discover methods to call
+    @SubscribeEvent
+    public void onServerStarting(ServerStartingEvent event)
+    {
+
+    }
+
+    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
+    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    public static class ClientModEvents
+    {
+        @SubscribeEvent
+        public static void onClientSetup(FMLClientSetupEvent event)
+        {
+
+        }
+
+    }
+
 }
