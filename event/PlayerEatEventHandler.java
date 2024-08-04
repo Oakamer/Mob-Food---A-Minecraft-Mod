@@ -1,5 +1,6 @@
 package net.oakamer.cropcraft.event;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -8,6 +9,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.oakamer.cropcraft.effect.ModEffects;
 import net.oakamer.cropcraft.item.ModItems;
 
 @Mod.EventBusSubscriber(modid = "cropcraft", bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
@@ -30,7 +32,6 @@ public class PlayerEatEventHandler {
             player.setInvulnerable(false);
 
             if (itemStack.getItem() == ModItems.ENDER_BISCUIT.get()) { // Checks if the item is food
-
                 // Define the teleport distance
                 double teleportDistance = 5.0;
                 Vec3 lookVec = player.getLookAngle().scale(teleportDistance);
@@ -42,6 +43,9 @@ public class PlayerEatEventHandler {
 
                 // Teleport the player
                 player.teleportTo(newX, newY, newZ);
+            }
+            if (itemStack.getItem() == ModItems.SPIDER_BLOOD_PURIFIED.get()) { // Checks if the item is food
+                player.addEffect(new MobEffectInstance(ModEffects.SLIMEY_EFFECT.get(), 200));
             }
 
         }
