@@ -12,9 +12,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.oakamer.cropcraft.block.ModBlocks;
 import net.oakamer.cropcraft.effect.ModEffects;
 import net.oakamer.cropcraft.item.ModItems;
+import net.oakamer.cropcraft.loot.ModLootModifiers;
 import net.oakamer.cropcraft.sound.ModSounds;
 import org.slf4j.Logger;
 
@@ -39,6 +42,7 @@ public class CropCraftMod
         modEventBus.addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
+        ModLootModifiers.register(modEventBus);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
@@ -60,6 +64,7 @@ public class CropCraftMod
             event.accept(ModItems.CREEPER_COOKIE);
             event.accept(ModItems.ENDER_BISCUIT);
             event.accept(ModItems.SPIDER_BLOOD_PURIFIED);
+            event.accept(ModItems.HARDENED_SPIDER_BLOOD);
         }
     }
 
