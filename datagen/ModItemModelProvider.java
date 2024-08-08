@@ -36,6 +36,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.CREEPER_COOKIE);
         simpleItem(ModItems.ENDER_BISCUIT);
         simpleItem(ModItems.SPIDER_BLOOD_PURIFIED);
+        simpleItem(ModItems.HARDENED_SPIDER_BLOOD);
         //Mob Food------------------------------------------------------
     }
 
